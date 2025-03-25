@@ -359,4 +359,5 @@ fabric.properties
 .idea/**.iml
 .idea/**.xml
 .idea/**/**.xml
-.idea
+.idea*
+.idea/*
