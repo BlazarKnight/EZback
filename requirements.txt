@@ -1,0 +1,7 @@
+os
+json
+dataclasses
+git
+gitdb
+typing-extensions
+flet
