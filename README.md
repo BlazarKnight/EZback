@@ -13,6 +13,6 @@ sorry we are still in development
 * install python
 * install requerments
 
-
-
-
+## to do
+* make a list of file paths
+* make hash file pair list 
