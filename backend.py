@@ -28,14 +28,26 @@ def os_detect():
     #this will read what os it is runing on and return it
     home_sys=os.name
     return home_sys
+
+#command -v
 def pakmandetect():
-    installed_pakmen= subprocess.getoutput(['bash', 'pakmandetect.sh'])
-    print(installed_pakmen)
+    installed_pakmen=[]
+    for i in ['apk', 'app', 'apt', 'apt-get', 'cargo', 'dnf', 'dpkg', 'emerge', 'eopkg', 'flatpak', 'nala', 'moss', 'nix-env', 'pacman', 'pamac', 'portage', 'rpm', 'snap', 'xbps', 'yay', 'yum', 'zypper']:
+        if os.popen(f'command -v {i}').read() != '':
+            #path_to_pakman= str(os.popen(f'command -v {i}').read()).removesuffix('\n')
+            installed_pakmen.append(i)
+    return installed_pakmen
 
-
+def packdetect(list_of_pakmen:list):
+    paks_list=[]
+    for i in list_of_pakmen:
+        if i == 'apt' | 'apt-get' | 'dpkg':
+            debpaks=os.popen(' dpkg --get-selections | cut -f1').read()
+        if i == 'snap':
+            pass
 def main():
-    print(os_detect())
-    pakmandetect()
+    print(os.popen(' dpkg --get-selections | cut -f1').read())
+
 
 
 
