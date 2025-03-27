@@ -1,7 +1,7 @@
 '''
 this is a library of functions for backend manegement
 '''
-import subprocess
+
 from dataclasses import dataclass
 import json
 import os
@@ -39,12 +39,25 @@ def pakmandetect():
     return installed_pakmen
 
 def packdetect(list_of_pakmen:list):
+    #todo: add the rest of the pakmen comands
     paks_list=[]
     for i in list_of_pakmen:
         if i == 'apt' | 'apt-get' | 'dpkg':
             debpaks=os.popen(' dpkg --get-selections | cut -f1').read()
         if i == 'snap':
             pass
+
+#todo add ls limed to specifid folder to backup
+
+#todo make hash file pair constuctors
+#todo add simple file copying and pasting comand
+#todo desine some siple vesion manegment system
+
+
+
+
+
+
 def main():
     print(os.popen(' dpkg --get-selections | cut -f1').read())
 
