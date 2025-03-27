@@ -1,7 +1,7 @@
-<h1 style="text-align: center;"> EZback</h1>
+<h1 align="center""> EZback</h1>
 <p align="center"><img src="EZbackicon.png" alt="a great logo for EZback a hourglass in red and black with an arrow pointing left">
 
-<h2 style="text-align: center;"> backup software made EZ</h2>
+<h2 align="center"> backup software made EZ</h2>
 
 ## install guide
 
