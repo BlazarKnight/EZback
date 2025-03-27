@@ -1,12 +1,5 @@
 <h1 style="text-align: center;"> EZback</h1>
-<img 
-    style="display: block; 
-           margin-left: auto;
-           margin-right: auto;
-           width: 30%;"
-    src="EZbackicon.png" 
-    alt="a great logo for EZback a hourglass in red and black with an arrow pointing left">
-</img>
+<p align="center"><img src="EZbackicon.png" alt="a great logo for EZback a hourglass in red and black with an arrow pointing left">
 
 <h2 style="text-align: center;"> backup software made EZ</h2>
 
