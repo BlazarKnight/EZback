@@ -1,8 +1,4 @@
-
 <h1 style="text-align: center;"> EZback</h1>
-
-
-
 <img 
     style="display: block; 
            margin-left: auto;
