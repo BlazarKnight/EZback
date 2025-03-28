@@ -20,7 +20,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 
 
-class wellcome(App):
+class homeselect(App):
     def build(self):
         # Create a layout
         layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
@@ -52,10 +52,10 @@ class TestApp(App):
     def build(self):
         return Button(text="Hello World")
 
-def runwellcome():
-    wellcome().run()
+def runhomeselect():
+    homeselect().run()
 
 
 if __name__ == '__main__':
     #TestApp().run()
-    wellcome().run()
+    runhomeselect()
