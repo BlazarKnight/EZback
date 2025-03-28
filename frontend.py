@@ -4,6 +4,9 @@ this is a library of funtions for frontend manegement
 import kivy
 
 import json
+
+from kivy.config import value
+
 import settingsman as st
 
 from kivy.app import App
@@ -23,30 +26,36 @@ class wellcome(App):
         layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
 
         # Create a label
-        Textin = TextInput(text="PATH to file for backup replace this text", font_size='24sp')
+        #Textin = TextInput(text="PATH to file for backup replace this text", font_size='24sp')
+
+
+
+        self.textin= TextInput(multiline=False)
+        #textinput.bid(on_text_validate=on_enter)
 
         # Create a button
-        button = Button(text="next", size_hint=(1, 0.2))
-        button.bind(on_press=self.on_button_press)
+        btn = Button(text="next", size_hint=(1, 0.2))
+        btn.bind(on_press=self.on_button_press)
 
         # Add widgets to the layout
-        layout.add_widget(Textin)
-        layout.add_widget(button)
+        layout.add_widget(self.textin)
+        layout.add_widget(btn)
 
         return layout
 
-    def on_button_press(self, instance):
-        st.update_setting("home_folder",T)
-
+    def on_button_press(self,btn ):
+        st.update_setting(key="home_folder",value=self.textin.text)
+        print('The widget', self.textin.text, 'have:',self.textin.text)
+        print(type(self.textin.text))
 
 class TestApp(App):
     def build(self):
         return Button(text="Hello World")
 
-
-
+def runwellcome():
+    wellcome().run()
 
 
 if __name__ == '__main__':
     #TestApp().run()
-    MyApp().run()
+    wellcome().run()

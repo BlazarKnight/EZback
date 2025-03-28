@@ -4,3 +4,7 @@ this file starts the program this is the only file that sould be exicuexd everyt
 '''
 import backend as bk
 import frontend as fr
+import settingsman as st
+
+st.init_settings()
+fr.runwellcome()
