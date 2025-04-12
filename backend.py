@@ -5,6 +5,9 @@ this is a library of functions for backend manegement
 from dataclasses import dataclass
 import json
 import os
+from glob import glob
+import hashlib
+
 
 @dataclass
 class home_files:
@@ -53,7 +56,27 @@ def packdetect(list_of_pakmen:list):
 #todo add simple file copying and pasting comand
 #todo desine some siple vesion manegment system
 
+def sha256sum(filename):
+    h  = hashlib.sha256()
+    b  = bytearray(128*1024)
+    mv = memoryview(b)
+    with open(filename, 'rb', buffering=0) as f:
+        while n := f.readinto(mv):
+            h.update(mv[:n])
+    return h.hexdigest()
 
+
+def directory_to_file_hash_pair_dict(directory:str): #this needs legacy pairady at all times!!!!!!!!!!!!!!!!!!!!!!1
+    list_of_paths_to_files=glob(directory)
+    dict_of_files_in_directory_as_key_hash_as_value_pairs={}
+    if len(list_of_paths_to_files) != len(set(list_of_paths_to_files)):
+        raise Exception("two files share a name space but contain diferent data they will both be copied but there is no way to asure their not coruped ")
+    for file_path in list_of_paths_to_files:
+        hashbrowns=sha256sum(file_path)
+        dict_of_files_in_directory_as_key_hash_as_value_pairs[file_path]=hashbrowns
+    if len(list_of_paths_to_files) != len(dict_of_files_in_directory_as_key_hash_as_value_pairs):
+        raise Exception('somthing is deeply fucked in the directory_to_file_hash_pair_file funtion deeeeeeply fucked!!!!!! previos exseption should have been raied')
+    return dict_of_files_in_directory_as_key_hash_as_value_pairs
 
 
 
