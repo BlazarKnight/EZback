@@ -64,10 +64,19 @@ def sha256sum(filename):
         while n := f.readinto(mv):
             h.update(mv[:n])
     return h.hexdigest()
+def directory_to_filelist(directory:str):
+    list_of_paths_to_files=[]
+    walk_of_directory =list( os.walk(directory))
+    for dirpath,_,filenames in os.walk(directory):
+        for f in filenames:
+
+            list_of_paths_to_files.append(os.path.join(dirpath, f))
+    return list_of_paths_to_files
+
 
 
 def directory_to_file_hash_pair_dict(directory:str): #this needs legacy pairady at all times!!!!!!!!!!!!!!!!!!!!!!1
-    list_of_paths_to_files=glob(directory)
+    list_of_paths_to_files = directory_to_filelist(directory)
     dict_of_files_in_directory_as_key_hash_as_value_pairs={}
     if len(list_of_paths_to_files) != len(set(list_of_paths_to_files)):
         raise Exception("two files share a name space but contain diferent data they will both be copied but there is no way to asure their not coruped ")
@@ -83,6 +92,7 @@ def directory_to_file_hash_pair_dict(directory:str): #this needs legacy pairady 
 
 def main():
     print(os.popen(' dpkg --get-selections | cut -f1').read())
+    print(directory_to_file_hash_pair_dict('testing/homedirectoryfortesting'))
 
 
 

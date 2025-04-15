@@ -1,8 +1,8 @@
 {
-  "home_folder": "PATH",
-  "desination_folder": "PATH",
-  "dark_theme": "True",
-  "pakmen": "None",
-  "desination_size": "int",
-  "home_size": "int"
+    "home_folder": "",
+    "desination_folder": "PATH",
+    "dark_theme": "True",
+    "pakmen": "None",
+    "desination_size": "int",
+    "home_size": "int"
 }
