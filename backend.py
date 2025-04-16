@@ -52,18 +52,25 @@ def packdetect(list_of_pakmen:list):
 
 #todo add ls limed to specifid folder to backup
 
-#todo make hash file pair constuctors
+
 #todo add simple file copying and pasting comand
 #todo desine some siple vesion manegment system
 
 def sha256sum(filename):
+    list_of_failed_files=[]
     h  = hashlib.sha256()
     b  = bytearray(128*1024)
     mv = memoryview(b)
-    with open(filename, 'rb', buffering=0) as f:
-        while n := f.readinto(mv):
-            h.update(mv[:n])
+    try:
+        with open(filename, 'rb', buffering=0) as f:
+            while n := f.readinto(mv):
+                h.update(mv[:n])
+    except:
+        list_of_failed_files.append(filename)
+        pass
+    print(list_of_failed_files)
     return h.hexdigest()
+
 def directory_to_filelist(directory:str):
     list_of_paths_to_files=[]
     walk_of_directory =list( os.walk(directory))
@@ -87,12 +94,29 @@ def directory_to_file_hash_pair_dict(directory:str): #this needs legacy pairady 
         raise Exception('somthing is deeply fucked in the directory_to_file_hash_pair_file funtion deeeeeeply fucked!!!!!! previos exseption should have been raied')
     return dict_of_files_in_directory_as_key_hash_as_value_pairs
 
+def dict_to_json(diton:dict,save_path):
+    file_path= save_path+'hash_file_pair.json'
+    try:
+        file = open(file_path, "x")
 
+    except:
+        file = open(file_path, "w")
+    json.dump(diton,file)
+    return 0
 
+def backup_json_compere_to_cuent_file_state(backup_json_file:str,home_directory_as_hash_file_pair_dict):
+    with open(backup_json_file, "r") as file:
+        contents = json.load(file)
+    if contents == home_directory_as_hash_file_pair_dict:
+        return(False,[]) #(was there any change?,list of changed files)
+    if contents != home_directory_as_hash_file_pair_dict:
+        changed_files_as_set = set(contents.keys()) ^ set(home_directory_as_hash_file_pair_dict.keys())
+        changed_files_as_list= list(changed_files_as_set)
+        return (True,changed_files_as_list)
 
 def main():
-    print(os.popen(' dpkg --get-selections | cut -f1').read())
-    print(directory_to_file_hash_pair_dict('testing/homedirectoryfortesting'))
+    print(backup_json_compere_to_cuent_file_state("testing/place for test jsons/hash_file_pair.json",directory_to_file_hash_pair_dict("/home/the-game/EZback/testing")))
+
 
 
 
