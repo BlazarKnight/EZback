@@ -84,6 +84,7 @@ def coppy_directory_of_path1_to_path2(copy_from_path,copy_to_path):
     shutil.copytree(copy_from_path, copy_to_path)
     return 0
 
+
 def directory_to_file_hash_pair_dict(directory:str): #this needs legacy pairady at all times!!!!!!!!!!!!!!!!!!!!!!1
     list_of_paths_to_files = directory_to_filelist(directory)
     dict_of_files_in_directory_as_key_hash_as_value_pairs={}
