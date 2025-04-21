@@ -119,7 +119,7 @@ def backup_json_compere_to_cuent_file_state(backup_json_file:str,home_directory_
 
 def main():
     print(backup_json_compere_to_cuent_file_state("testing/place for test jsons/hash_file_pair.json",directory_to_file_hash_pair_dict("/home/the-game/EZback/testing")))
-
+    coppy_directory_of_path1_to_path2("/home/the-game/EZback/testing/homedirectoryfortesting",'/media/the-game/UNTITLED/landing/')
 
 
 
