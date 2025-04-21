@@ -7,7 +7,7 @@ import json
 import os
 from glob import glob
 import hashlib
-
+import shutil
 
 @dataclass
 class home_files:
@@ -80,7 +80,9 @@ def directory_to_filelist(directory:str):
             list_of_paths_to_files.append(os.path.join(dirpath, f))
     return list_of_paths_to_files
 
-
+def coppy_directory_of_path1_to_path2(copy_from_path,copy_to_path):
+    shutil.copytree(copy_from_path, copy_to_path)
+    return 0
 
 def directory_to_file_hash_pair_dict(directory:str): #this needs legacy pairady at all times!!!!!!!!!!!!!!!!!!!!!!1
     list_of_paths_to_files = directory_to_filelist(directory)
