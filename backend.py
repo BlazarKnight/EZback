@@ -32,6 +32,14 @@ def os_detect():
     home_sys=os.name
     return home_sys
 
+def get_dir_size(path='.'):
+    statvfs = os.statvfs(path)
+    return 'size',statvfs.f_frsize * statvfs.f_blocks
+
+def free_space_of_place(directory:str):
+    statvfs = os.statvfs(directory)
+    return "free",statvfs.f_frsize * statvfs.f_bavail
+
 #command -v
 def pakmandetect():
     installed_pakmen=[]
@@ -117,15 +125,6 @@ def backup_json_compere_to_cuent_file_state(backup_json_file:str,home_directory_
         changed_files_as_list= list(changed_files_as_set)
         return (True,changed_files_as_list)
 
-def get_dir_size(path='.'):
-    total = 0
-    with os.scandir(path) as it:
-        for entry in it:
-            if entry.is_file():
-                total += entry.stat().st_size
-            elif entry.is_dir():
-                total += get_dir_size(entry.path)
-    return total
 
 
 
@@ -134,7 +133,9 @@ def get_dir_size(path='.'):
 
 def main():
     print(backup_json_compere_to_cuent_file_state("testing/place for test jsons/hash_file_pair.json",directory_to_file_hash_pair_dict("/home/the-game/EZback/testing")))
-    coppy_directory_of_path1_to_path2("/home/the-game/EZback/testing/homedirectoryfortesting",'/media/the-game/UNTITLED/landing/')
+    #coppy_directory_of_path1_to_path2("/home/the-game/EZback/testing/homedirectoryfortesting",'/media/the-game/UNTITLED/landing/')
+    print(free_space_of_place("/home/the-game/EZback/testing/homedirectoryfortesting/"))
+    print(get_dir_size("/home/the-game/EZback/testing/homedirectoryfortesting/"))
 
 
 
