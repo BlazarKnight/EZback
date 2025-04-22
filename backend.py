@@ -116,6 +116,12 @@ def backup_json_compere_to_cuent_file_state(backup_json_file:str,home_directory_
         changed_files_as_set = set(contents.keys()) ^ set(home_directory_as_hash_file_pair_dict.keys())
         changed_files_as_list= list(changed_files_as_set)
         return (True,changed_files_as_list)
+def mesure_size_of_direct(directory)
+
+
+
+
+
 
 def main():
     print(backup_json_compere_to_cuent_file_state("testing/place for test jsons/hash_file_pair.json",directory_to_file_hash_pair_dict("/home/the-game/EZback/testing")))
