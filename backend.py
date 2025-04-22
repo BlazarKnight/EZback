@@ -89,7 +89,8 @@ def directory_to_filelist(directory:str):
     return list_of_paths_to_files
 
 def coppy_directory_of_path1_to_path2(copy_from_path,copy_to_path):
-    shutil.copytree(copy_from_path, copy_to_path)
+    if get_dir_size(copy_from_path)<= free_space_of_place(copy_to_path)
+        shutil.copytree(copy_from_path, copy_to_path)
     return 0
 
 
@@ -123,7 +124,7 @@ def backup_json_compere_to_cuent_file_state(backup_json_file:str,home_directory_
     if contents != home_directory_as_hash_file_pair_dict:
         changed_files_as_set = set(contents.keys()) ^ set(home_directory_as_hash_file_pair_dict.keys())
         changed_files_as_list= list(changed_files_as_set)
-        return (True,changed_files_as_list)
+        return (True,changed_files_as_list)#(was there any change?,list of changed files)
 
 
 
