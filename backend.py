@@ -89,8 +89,10 @@ def directory_to_filelist(directory:str):
     return list_of_paths_to_files
 
 def coppy_directory_of_path1_to_path2(copy_from_path,copy_to_path):
-    if get_dir_size(copy_from_path)<= free_space_of_place(copy_to_path)
+    if get_dir_size(copy_from_path)[1]<= free_space_of_place(copy_to_path)[1]:
         shutil.copytree(copy_from_path, copy_to_path)
+    else:
+        raise "Space error the directory is to big"
     return 0
 
 
