@@ -131,12 +131,13 @@ def backup_json_compere_to_cuent_file_state(backup_json_file:str,home_directory_
         changed_files_as_list= list(changed_files_as_set)
         return (True,changed_files_as_list)#(was there any change?,list of changed files)
 
-def create_new_backup(back_up_directory,directory_to_be_backed_up):
+def create_new_backup(back_up_directory,directory_to_be_backed_up,info_json_save_path):
     try:
         copy_directory_of_path1_to_path2(directory_to_be_backed_up,back_up_directory)
     except:
         print("Space error the directory is to big")
-
+    if directory_to_file_hash_pair_dict(directory_to_be_backed_up).values()==directory_to_file_hash_pair_dict(directory_to_file_hash_pair_dict(back_up_directory)).values():
+        dict_to_json(directory_to_file_hash_pair_dict(back_up_directory))
 
 
 
