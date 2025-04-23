@@ -58,10 +58,10 @@ def packdetect(list_of_pakmen:list):
         if i == 'snap':
             pass
 
-#todo add ls limed to specifid folder to backup
 
 
-#todo add simple file copying and pasting comand
+
+
 #todo desine some siple vesion manegment system
 
 def sha256sum(filename):
@@ -90,7 +90,10 @@ def directory_to_filelist(directory:str):
 
 def coppy_directory_of_path1_to_path2(copy_from_path,copy_to_path):
     if get_dir_size(copy_from_path)[1]<= free_space_of_place(copy_to_path)[1]:
-        shutil.copytree(copy_from_path, copy_to_path)
+        try:
+            shutil.copytree(copy_from_path, copy_to_path)
+        except:
+            shutil.copytree(copy_from_path, copy_to_path,dirs_exist_ok=True)
     else:
         raise "Space error the directory is to big"
     return 0
@@ -128,6 +131,7 @@ def backup_json_compere_to_cuent_file_state(backup_json_file:str,home_directory_
         changed_files_as_list= list(changed_files_as_set)
         return (True,changed_files_as_list)#(was there any change?,list of changed files)
 
+def create_new_backup(back_up_directory,directory_to_be_backed_up):
 
 
 
