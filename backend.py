@@ -88,7 +88,7 @@ def directory_to_filelist(directory:str):
             list_of_paths_to_files.append(os.path.join(dirpath, f))
     return list_of_paths_to_files
 
-def coppy_directory_of_path1_to_path2(copy_from_path,copy_to_path):
+def copy_directory_of_path1_to_path2(copy_from_path,copy_to_path):
     if get_dir_size(copy_from_path)[1]<= free_space_of_place(copy_to_path)[1]:
         try:
             shutil.copytree(copy_from_path, copy_to_path)
@@ -132,8 +132,10 @@ def backup_json_compere_to_cuent_file_state(backup_json_file:str,home_directory_
         return (True,changed_files_as_list)#(was there any change?,list of changed files)
 
 def create_new_backup(back_up_directory,directory_to_be_backed_up):
-
-
+    try:
+        copy_directory_of_path1_to_path2(directory_to_be_backed_up,back_up_directory)
+    except:
+        print("Space error the directory is to big")
 
 
 
