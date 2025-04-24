@@ -1,6 +1,6 @@
 <h1 align="center"> EZback</h1>
 <div align="center">
-<img align="center"><img src="EZbackicon2.04-8.svg" alt="a great logo for EZback a hourglass in red and black with an arrow pointing left"></p>
+<img align="center" src="EZbackicon2.04-8.svg" alt="a great logo for EZback a hourglass in red and black with an arrow pointing left"></p>
 </div>
 <h2 align="center"> backup software made EZ</h2>
 

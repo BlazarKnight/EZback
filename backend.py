@@ -112,7 +112,7 @@ def directory_to_file_hash_pair_dict(directory:str): #this needs legacy pairady 
     return dict_of_files_in_directory_as_key_hash_as_value_pairs
 
 def dict_to_json(diton:dict,save_path):
-    file_path= save_path+'hash_file_pair.json'
+    file_path= save_path+'hash_file_pair.EZback'
     try:
         file = open(file_path, "x")
 
@@ -131,21 +131,22 @@ def backup_json_compere_to_cuent_file_state(backup_json_file:str,home_directory_
         changed_files_as_list= list(changed_files_as_set)
         return (True,changed_files_as_list)#(was there any change?,list of changed files)
 
-def create_new_backup(back_up_directory,directory_to_be_backed_up,info_json_save_path):
+def create_new_backup(back_up_directory,directory_to_be_backed_up):
     try:
         copy_directory_of_path1_to_path2(directory_to_be_backed_up,back_up_directory)
     except:
         print("Space error the directory is to big")
     if directory_to_file_hash_pair_dict(directory_to_be_backed_up).values()==directory_to_file_hash_pair_dict(directory_to_file_hash_pair_dict(back_up_directory)).values():
-        dict_to_json(directory_to_file_hash_pair_dict(back_up_directory),)
-
+        dict_to_json(directory_to_file_hash_pair_dict(back_up_directory),back_up_directory)
+        return 0
 
 
 def main():
-    print(backup_json_compere_to_cuent_file_state("testing/place for test jsons/hash_file_pair.json",directory_to_file_hash_pair_dict("/home/the-game/EZback/testing")))
-    #coppy_directory_of_path1_to_path2("/home/the-game/EZback/testing/homedirectoryfortesting",'/media/the-game/UNTITLED/landing/')
-    print(free_space_of_place("/home/the-game/EZback/testing/homedirectoryfortesting/"))
-    print(get_dir_size("/home/the-game/EZback/testing/homedirectoryfortesting/"))
+    #print(backup_json_compere_to_cuent_file_state("testing/place for test jsons/hash_file_pair.json",directory_to_file_hash_pair_dict("/home/the-game/EZback/testing")))
+
+    #print(free_space_of_place("/home/the-game/EZback/testing/homedirectoryfortesting/"))
+    #print(get_dir_size("/home/the-game/EZback/testing/homedirectoryfortesting/"))
+    create_new_backup("/home/the-game/EZback/testing/homedirectoryfortesting", '/media/the-game/UNTITLED/landing/')
 
 
 
