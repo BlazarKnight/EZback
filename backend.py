@@ -32,13 +32,20 @@ def os_detect():
     home_sys=os.name
     return home_sys
 
-def get_dir_size(path='.'):
-    statvfs = os.statvfs(path)
-    return 'size',statvfs.f_frsize * statvfs.f_blocks
+def get_dir_size(directory:str):
+    total_size = 0
+    for dirpath, dirnames, filenames in os.walk(directory):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            # skip if it is symbolic link
+            if not os.path.islink(fp):
+                total_size += os.path.getsize(fp)
+
+    return total_size
 
 def free_space_of_place(directory:str):
-    statvfs = os.statvfs(directory)
-    return "free",statvfs.f_frsize * statvfs.f_bavail
+    stats = shutil.disk_usage(directory)
+    return stats.free
 
 #command -v
 def pakmandetect():
@@ -89,7 +96,7 @@ def directory_to_filelist(directory:str):
     return list_of_paths_to_files
 
 def copy_directory_of_path1_to_path2(copy_from_path,copy_to_path):
-    if get_dir_size(copy_from_path)[1]<= free_space_of_place(copy_to_path)[1]:
+    if get_dir_size(copy_from_path)< free_space_of_place(copy_to_path):
         try:
             shutil.copytree(copy_from_path, copy_to_path)
         except:
@@ -112,16 +119,42 @@ def directory_to_file_hash_pair_dict(directory:str): #this needs legacy pairady 
     return dict_of_files_in_directory_as_key_hash_as_value_pairs
 
 def dict_to_json(diton:dict,save_path):
-    file_path= save_path+'hash_file_pair.EZback'
+    # this is a genaric dict to json fuction this will not write .EZback files
+    file_path= save_path+'hash_file_pair.json'
+
     try:
         file = open(file_path, "x")
 
     except:
         file = open(file_path, "w")
     json.dump(diton,file)
+
+
     return 0
 
-def backup_json_compere_to_cuent_file_state(backup_json_file:str,home_directory_as_hash_file_pair_dict):
+def dict_to_EZback(diton:dict,save_path):
+    file_path= save_path+'hash_file_pair.json'
+
+    try:
+        file = open(file_path, "x")
+
+    except:
+        file = open(file_path, "w")
+    json.dump(diton,file)
+
+    # Source file path
+    source = file_path
+
+    # destination file path
+    dest = save_path+'hash_file_pair.EZback'
+
+    # Now rename the source path
+    # to destination path
+    # using os.rename() method
+    os.rename(source, dest)
+    return 0
+
+def backup_EZback_file_compere_to_cuent_file_state(backup_json_file:str,home_directory_as_hash_file_pair_dict):
     with open(backup_json_file, "r") as file:
         contents = json.load(file)
     if contents == home_directory_as_hash_file_pair_dict:
@@ -131,24 +164,31 @@ def backup_json_compere_to_cuent_file_state(backup_json_file:str,home_directory_
         changed_files_as_list= list(changed_files_as_set)
         return (True,changed_files_as_list)#(was there any change?,list of changed files)
 
-def create_new_backup(back_up_directory,directory_to_be_backed_up):
+def create_new_backup(save_to_path, directory_to_be_backed_up):
     try:
-        copy_directory_of_path1_to_path2(directory_to_be_backed_up,back_up_directory)
+        copy_directory_of_path1_to_path2(directory_to_be_backed_up, save_to_path)
     except:
         print("Space error the directory is to big")
-    if directory_to_file_hash_pair_dict(directory_to_be_backed_up).values()==directory_to_file_hash_pair_dict(directory_to_file_hash_pair_dict(back_up_directory)).values():
-        dict_to_json(directory_to_file_hash_pair_dict(back_up_directory),back_up_directory)
+        return 'error'
+    finally:
+        dict_to_EZback(directory_to_file_hash_pair_dict(save_to_path), save_to_path)
         return 0
-
-
+def find_EZback_file_in_directory(path,ret_path_to_dir=True):
+    for root, dirs, files in os.walk(path):
+        if 'hash_file_pair.EZback' in files:
+            if ret_path_to_dir:
+                return root+'/'
+            else:
+                return os.path.join(root,'hash_file_pair.EZback')
 def main():
     #print(backup_json_compere_to_cuent_file_state("testing/place for test jsons/hash_file_pair.json",directory_to_file_hash_pair_dict("/home/the-game/EZback/testing")))
 
     #print(free_space_of_place("/home/the-game/EZback/testing/homedirectoryfortesting/"))
     #print(get_dir_size("/home/the-game/EZback/testing/homedirectoryfortesting/"))
-    create_new_backup("/home/the-game/EZback/testing/homedirectoryfortesting", '/media/the-game/UNTITLED/landing/')
-
-
+    create_new_backup( '/media/the-game/UNTITLED/backup/',"/home/the-game/EZback/testing/homedirectoryfortesting/")
+    print(get_dir_size('/home/the-game/EZback/testing/homedirectoryfortesting'))
+    print(free_space_of_place('/media/the-game/UNTITLED/backup'))
+    print(find_EZback_file_in_directory('/media/the-game/UNTITLED/',ret_path_to_dir=False))
 
 
 if __name__=="__main__":
