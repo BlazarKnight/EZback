@@ -155,6 +155,7 @@ def dict_to_EZback(diton:dict,save_path):
     return 0
 
 def backup_EZback_file_compere_to_cuent_file_state(backup_json_file:str,home_directory_as_hash_file_pair_dict):
+
     with open(backup_json_file, "r") as file:
         contents = json.load(file)
     if contents == home_directory_as_hash_file_pair_dict:
