@@ -182,14 +182,15 @@ def find_EZback_file_in_directory(path,ret_path_to_dir=True):
             else:
                 return os.path.join(root,'hash_file_pair.EZback')
 def main():
+    external_drive_path= '/media/the-game/NEW VOLUME/'
     #print(backup_json_compere_to_cuent_file_state("testing/place for test jsons/hash_file_pair.json",directory_to_file_hash_pair_dict("/home/the-game/EZback/testing")))
 
     #print(free_space_of_place("/home/the-game/EZback/testing/homedirectoryfortesting/"))
     #print(get_dir_size("/home/the-game/EZback/testing/homedirectoryfortesting/"))
-    create_new_backup( '/media/the-game/UNTITLED/backup/',"/home/the-game/EZback/testing/homedirectoryfortesting/")
+    create_new_backup( external_drive_path,"/home/the-game/EZback/testing/homedirectoryfortesting/")
     print(get_dir_size('/home/the-game/EZback/testing/homedirectoryfortesting'))
-    print(free_space_of_place('/media/the-game/UNTITLED/backup'))
-    print(find_EZback_file_in_directory('/media/the-game/UNTITLED/',ret_path_to_dir=False))
+    print(free_space_of_place(external_drive_path))
+    print(find_EZback_file_in_directory(external_drive_path,ret_path_to_dir=False))
 
 
 if __name__=="__main__":
