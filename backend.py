@@ -124,7 +124,7 @@ def directory_to_file_hash_pair_dict(directory:str): #this needs legacy pairady 
         hashbrowns=sha256sum(file_path)
         dict_of_files_in_directory_as_key_hash_as_value_pairs[file_path]=hashbrowns
     if len(list_of_paths_to_files) != len(dict_of_files_in_directory_as_key_hash_as_value_pairs):
-        raise Exception('somthing is deeply fucked in the directory_to_file_hash_pair_file funtion deeeeeeply fucked!!!!!! previos exseption should have been raied')
+        raise Exception('somthing is deeply fucked in the directory_to_file_hash_pair_file funtion deeeeeeply fucked!!!!!! previos exseptions should have been raied')
     return dict_of_files_in_directory_as_key_hash_as_value_pairs
 
 def dict_to_json(diton:dict,save_path):
