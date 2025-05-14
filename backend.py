@@ -95,14 +95,23 @@ def directory_to_filelist(directory:str):
             list_of_paths_to_files.append(os.path.join(dirpath, f))
     return list_of_paths_to_files
 
-def copy_directory_of_path1_to_path2(copy_from_path,copy_to_path):
-    if get_dir_size(copy_from_path)< free_space_of_place(copy_to_path):
-        try:
-            shutil.copytree(copy_from_path, copy_to_path)
-        except:
+def copy_directory_of_path1_to_path2(copy_from_path,copy_to_path,*,makeEZdir=False):
+#    print( bool(get_dir_size(copy_from_path) < free_space_of_place(copy_to_path)))
+    if bool(get_dir_size(copy_from_path) < free_space_of_place(copy_to_path)):
+        if makeEZdir:
+            shutil.copytree(copy_from_path, copy_to_path+'EZback/',dirs_exist_ok=True)
+
+        else:
             shutil.copytree(copy_from_path, copy_to_path,dirs_exist_ok=True)
+
+
     else:
-        raise "Space error the directory is to big"
+        print(bool( get_dir_size(copy_from_path) < free_space_of_place(copy_to_path)))
+        print("Space error the directory is to big 109")
+        raise "Space error the directory is to big 109"
+        return "Space error the directory is to big 109"
+
+
     return 0
 
 
@@ -167,12 +176,15 @@ def backup_EZback_file_compere_to_cuent_file_state(backup_json_file:str,home_dir
 
 def create_new_backup(save_to_path, directory_to_be_backed_up):
     try:
-        copy_directory_of_path1_to_path2(directory_to_be_backed_up, save_to_path)
+        copy_directory_of_path1_to_path2(directory_to_be_backed_up, save_to_path,makeEZdir=True)
+        dict_to_EZback(directory_to_file_hash_pair_dict(save_to_path + 'EZback/'), save_to_path + 'EZback/')
     except:
-        print("Space error the directory is to big")
+        print(copy_directory_of_path1_to_path2(directory_to_be_backed_up, save_to_path,makeEZdir=True))
+        print("Space error the directory is to big 177")
+
         return 'error'
     finally:
-        dict_to_EZback(directory_to_file_hash_pair_dict(save_to_path), save_to_path)
+
         return 0
 def find_EZback_file_in_directory(path,ret_path_to_dir=True):
     for root, dirs, files in os.walk(path):
@@ -181,6 +193,7 @@ def find_EZback_file_in_directory(path,ret_path_to_dir=True):
                 return root+'/'
             else:
                 return os.path.join(root,'hash_file_pair.EZback')
+
 def main():
     external_drive_path= '/media/the-game/NEW VOLUME/'
     #print(backup_json_compere_to_cuent_file_state("testing/place for test jsons/hash_file_pair.json",directory_to_file_hash_pair_dict("/home/the-game/EZback/testing")))
@@ -188,9 +201,10 @@ def main():
     #print(free_space_of_place("/home/the-game/EZback/testing/homedirectoryfortesting/"))
     #print(get_dir_size("/home/the-game/EZback/testing/homedirectoryfortesting/"))
     create_new_backup( external_drive_path,"/home/the-game/EZback/testing/homedirectoryfortesting/")
+    print(create_new_backup( external_drive_path,"/home/the-game/EZback/testing/homedirectoryfortesting/"))
     print(get_dir_size('/home/the-game/EZback/testing/homedirectoryfortesting'))
     print(free_space_of_place(external_drive_path))
-    print(find_EZback_file_in_directory(external_drive_path,ret_path_to_dir=False))
+    #print(find_EZback_file_in_directory(external_drive_path,ret_path_to_dir=False))
 
 
 if __name__=="__main__":
