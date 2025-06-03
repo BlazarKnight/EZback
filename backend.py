@@ -170,9 +170,9 @@ def backup_EZback_file_compere_to_cuent_file_state(backup_json_file:str,home_dir
     if contents == home_directory_as_hash_file_pair_dict:
         return(False,[]) #(was there any change?,list of changed files)
     if contents != home_directory_as_hash_file_pair_dict:
-        changed_files_as_set = set(contents.keys()) ^ set(home_directory_as_hash_file_pair_dict.keys())
+        changed_files_as_set = set(contents.values()) ^ set(home_directory_as_hash_file_pair_dict.values())
         changed_files_as_list= list(changed_files_as_set)
-        return (True,changed_files_as_list)#(was there any change?,list of changed files)
+        return (True,changed_files_as_list,)#(was there any change?,list of changed files)
 
 def create_new_backup(save_to_path, directory_to_be_backed_up):
     try:
@@ -195,7 +195,22 @@ def find_EZback_file_in_directory(path,ret_path_to_dir=True):
                 return os.path.join(root,'hash_file_pair.EZback')
 
 def main():
-    external_drive_path= '/media/the-game/NEW VOLUME/'
+    def make_randomfile(path):
+        import secrets as sec
+        the_tropo = sec.token_urlsafe(7)
+        file_path = path + 'IF-A-USER-SEES-THIS-THAN-SOMETHING-BAD-HAS-HAPPEND'+the_tropo+".wtf"
+
+        try:
+            file = open(file_path, "x")
+
+        except:
+            file = open(file_path, "w")
+        file.write(sec.token_urlsafe(sec.randbelow(5000)))
+
+
+        return 0
+    external_drive_path= '/home/the-game/EZback/testing/homedirectoryfortesting/'
+    internal_save_path= "/home/the-game/EZback/testing/homedirectoryfortesting/"
     #print(backup_json_compere_to_cuent_file_state("testing/place for test jsons/hash_file_pair.json",directory_to_file_hash_pair_dict("/home/the-game/EZback/testing")))
 
     #print(free_space_of_place("/home/the-game/EZback/testing/homedirectoryfortesting/"))
@@ -204,6 +219,11 @@ def main():
     print(create_new_backup( external_drive_path,"/home/the-game/EZback/testing/homedirectoryfortesting/"))
     print(get_dir_size('/home/the-game/EZback/testing/homedirectoryfortesting'))
     print(free_space_of_place(external_drive_path))
+    #make_randomfile(internal_save_path)
+    #make_randomfile(internal_save_path)
+    print(backup_EZback_file_compere_to_cuent_file_state(find_EZback_file_in_directory(external_drive_path,ret_path_to_dir=False),directory_to_file_hash_pair_dict(internal_save_path)))
+
+
     #print(find_EZback_file_in_directory(external_drive_path,ret_path_to_dir=False))
 
 

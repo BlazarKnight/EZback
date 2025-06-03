@@ -1,91 +1,130 @@
-'''
-this is a library of funtions for frontend manegement
-'''
-import kivy
+xml = """\
+<interface>
+  <template class="wigit" parent="GtkBox">
+  <child>
+  <object class="GtkScrollable">
+  <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Welcome to EZback</property>
+        <property name="margin-bottom">3</property>
+        <style>
+          <class name="title-1"/>
+        </style>
+      </object>
+    </child>
+    <child>
+          <object class="GtkImage">
+  <property name="visible">True</property>
+  <property name="can_focus">True</property>
+  <property name="file">src/icon/EZbackicon2.04-8.png</property>
+  <property name="pixel_size">500</property>
+</object>
 
-import json
-
-from kivy.config import value
-
-import settingsman as st
-
-from kivy.app import App
-from kivy.uix.button import Button
-from kivy.core.window import Window
-from kivy.uix.textinput import TextInput
-from tkinter import filedialog
-from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-
-global GLOB_BACK_GROUND_COLOR_AS_RGBA
-global GLOB_BORDER_COLOR_AS_RGBA
-global GLOB_TEXT_COLOR_AS_RGBA
-
-# set defalt color palet
-GLOB_BORDER_COLOR_AS_RGBA = [225,0,0,1] #red
-GLOB_TEXT_COLOR_AS_RGBA = [1,1,1,1] #white
-GLOB_BACK_GROUND_COLOR_AS_RGBA = [0,0,0,1] #black
-
-#this function is here so we dont need to write it again but dont use or impiment it untill kivy has full coloring suport for all used functions
-'''def theme():
-    print(bool(st.read_setting("dark_theme")))
-    if not  bool(st.read_setting("dark_theme")):
-        GLOB_TEXT_COLOR_AS_RGBA = [0,0,0,1] #black
-        GLOB_BACK_GROUND_COLOR_AS_RGBA = [1,1,1,1] #white
-    return 0'''
-
-class homeselect(App):
-    def build(self):
-        # Create a layout
-        layout = BoxLayout(orientation='vertical', spacing=20, padding=20)
-        self.butlay = BoxLayout(orientation='horizontal',spacing=20, padding=20)
-        # Create a label
-        #Textin = TextInput(text="PATH to file for backup replace this text", font_size='24sp')
-        warn_lable= Label(text="input the path of folder you want to back up")
-
-
-        self.textin= TextInput(multiline=False)
-        #textinput.bid(on_text_validate=on_enter)
-
-        # Create a button
-        btn1 = Button(text="next", size_hint=(1, 0.2))
-        btn2 = Button(text="choose a directory", size_hint=(1, 0.2))
-        btn2.bind(on_press=self.on_button2_press)
-        btn1.bind(on_press=self.on_button1_press)
-
-        # Add widgets to the layout
-        layout.add_widget(warn_lable)
-        #layout.add_widget(self.textin)
-
-        self.butlay.add_widget(self.textin)
-        self.butlay.add_widget(btn2)
-        layout.add_widget(self.butlay)
-        layout.add_widget(btn1)
-
-
-        return layout
-    def on_button2_press(self,bnt2):
-        self.textin.insert_text(filedialog.askdirectory())
+        </child>
+    <child>
+          <object class="GtkLabel">
+            <property name="label">back up softwear made EZ </property>
+            <property name="justify">2</property>
+          </object>
+        </child>
+      <child>
+      <object class="GtkButton" id="hello_button">
+        <property name="label">Hello World</property>
+        <signal name="clicked" handler="hello_button_clicked" swapped="no" />
+      </object>
+    </child>
+    <child>
+    <object class="GtkButton" id="New">
+            <property name="label">Make a new backup</property>
+            <signal name="clicked" handler="new_button_clicked" swapped="no" />
+            <property name="margin-bottom">6</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="Update">
+            <property name="label">Update old backup</property>
+            <signal name="clicked" handler="update_button_clicked" swapped="no" />
+            <property name="margin-bottom">6</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="Verify">
+            <property name="label">Verify backup integrity</property>
+            <signal name="clicked" handler="verify_button_clicked" swapped="no" />
+            <property name="margin-bottom">6</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="About">
+            <property name="label">About EZback</property>
+            <signal name="clicked" handler="about_button_clicked" swapped="no" />
+            <property name="margin-bottom">6</property>
+          </object>
+        </child>
+    </object>
+        </child>
+  </template>
+</interface>
+"""
+import gi
+import os
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+from gi.repository import Gtk, Adw, Gio, GLib
 
 
 
-    def on_button1_press(self, btn1):
-        st.update_setting(key="home_folder",value=self.textin.text)
-        print('The widget', self.textin.text, 'have:',self.textin.text)
-        print(type(self.textin.text))
+#base_path = os.path.abspath(os.path.dirname(__file__))
+#resource_path = os.path('Learn.gresource')
+resource = Gio.Resource.load('Learn.gresource')
 
-class TestApp(App):
-    def build(self):
-        return Button(text="Hello World")
 
-def runhomeselect():
-    homeselect().run()
+
+
+uifile="src/ui/this works.ui"
+@Gtk.Template(string=xml)
+class Foo(Gtk.Box):
+    __gtype_name__ = "wigit"
+
+    def __init__(self):
+        super().__init__(orientation=Gtk.Orientation.VERTICAL)
+
+        self.hello_button = Gtk.Button(label="EZback")
+        self.hello_button.connect('clicked', self.hello_button_clicked)
+        self.append(self.hello_button)
+
+        image = Gtk.Image.new_from_file('src/icon/EZbackicon2.04-8.svg')
+
+
+
+
+    @Gtk.Template.Callback()
+    def hello_button_clicked(self, *args):
+        print("hello world from temp")
+
+
+
+
+
+
+def on_activate(app):
+    # … create a new window…
+    win = Gtk.ApplicationWindow(application=app)
+    # … with a button in it…
+    btn = Gtk.Button(label='Hello, World!')
+    # … which closes the window when clicked
+    btn.connect('clicked', lambda x: print("hello world from py"))
+    win.set_child(Foo())
+    win.present()
+
+# Create a new application
+app = Gtk.Application(application_id='com.example.GtkApplication')
+app.connect('activate', on_activate)
+
+# Run the application
+
 
 
 if __name__ == '__main__':
-    st.init_settings()
-    #theme()
-    #TestApp().run()
-    runhomeselect()
+
+    app.run(None)
