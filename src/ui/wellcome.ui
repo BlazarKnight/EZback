@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="wellcomewind" parent="GtkBox">
+
+      <object class="GtkBox">
+    <property name="valign">3</property>
+    <property name="halign">3</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Welcome to EZback</property>
+        <property name="margin-bottom">3</property>
+        <style>
+          <class name="title-1"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox" id="subtitle">
+        <property name="orientation">1</property>
+        <property name="halign">3</property>
+        <property name="margin-bottom">15</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label">back up softwear made EZ </property>
+            <property name="justify">2</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">1</property>
+        <property name="homogeneous">true</property>
+        <property name="halign">3</property>
+        <child>
+          <object class="GtkButton" id="New">
+            <property name="label">Make a new backup</property>
+            <signal name="clicked" handler="new_button_clicked" swapped="no" />
+            <property name="margin-bottom">6</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="Update">
+            <property name="label">Update old backup</property>
+            <signal name="clicked" handler="update_button_clicked" swapped="no" />
+            <property name="margin-bottom">6</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="Verify">
+            <property name="label">Verify backup integrity</property>
+            <signal name="clicked" handler="verify_button_clicked" swapped="no" />
+            <property name="margin-bottom">6</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="About">
+            <property name="label">About EZback</property>
+            <signal name="clicked" handler="about_button_clicked" swapped="no" />
+            <property name="margin-bottom">6</property>
+          </object>
+        </child>
+      </object>
+    </child>
+      </object>
+  </template>
+</interface>

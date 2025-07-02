@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/home/the-game/PycharmProjects/PythonProject2">
+    <file compressed="true">src/css/main.css</file>
+     <file alias="EZbackicon2.04-8.svg">src/icon/EZbackicon2.04-8.svg</file>
+    <file alias="EZbackicon2.04-8.png">src/icon/EZbackicon2.04-8.png</file>
+
+    <file compressed="true" preprocess="xml-stripblanks">src/ui/wellcome.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">src/ui/this works.ui</file>
+  </gresource>
+</gresources>
