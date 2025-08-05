@@ -361,3 +361,4 @@ fabric.properties
 .idea/**/**.xml
 .idea*
 .idea/*
+.AppImage
